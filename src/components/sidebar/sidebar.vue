@@ -156,6 +156,12 @@ aside {
     .button .text {
       opacity: 1;
     }
+
+    .button {
+      .material-icons {
+        margin-right: 1rem;
+      }
+    }
   }
 
   @media (max-width: 768px) {
