@@ -164,9 +164,11 @@ aside {
     }
   }
 
+  // TODO: show navbar when using phone
   @media (max-width: 768px) {
-    position: fixed;
-    z-index: 99;
+    // position: fixed;
+    // z-index: 99;
+    display: none;
   }
 }
 </style>

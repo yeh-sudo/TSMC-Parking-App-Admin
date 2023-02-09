@@ -1,6 +1,10 @@
 <template>
   <sidebar />
-  <router-view />
+  <router-view v-slot="{ Component }">
+    <transition name="fade" mode="out-in">
+      <Component :is="Component" />
+    </transition>
+  </router-view>
 </template>
 
 <script setup>
@@ -44,5 +48,11 @@ button {
       padding-left: 6rem;
     }
   }
+}
+.fade-enter-from, .fade-leave-to {
+  opacity: 0;
+}
+.fade-enter-active, .fade-leave-active{
+  transition: opacity 0.3s ease-out;
 }
 </style>
