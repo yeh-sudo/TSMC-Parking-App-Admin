@@ -10,8 +10,9 @@
               type="search"
               placeholder="Search"
               aria-label="Search"
+              v-model="searchInput"
             />
-            <button class="btn btn-danger" type="submit">Search</button>
+            <button id="SearchButton" class="btn btn-danger" type="submit" @click.prevent="searchButtonClick">Search</button>
           </form>
         </div>
       </nav>
@@ -44,6 +45,7 @@ export default {
   },
   data() {
     return {
+      searchInput: "",
       users: [
         {
           id: "ChengShianYeh",
@@ -64,6 +66,13 @@ export default {
       ],
     };
   },
+  methods: {
+    searchButtonClick: function() {
+      // fetch user api to search user
+      console.log("hello, " + this.searchInput);
+      this.searchInput = "";
+    }
+  }
 };
 </script>
 
