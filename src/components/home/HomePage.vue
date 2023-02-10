@@ -4,23 +4,47 @@
       <div class="p-4 mb-3 bg-light rounded-3">
         <h2>Cars In The Parking Lot</h2>
         <div class="container py-1">
-          <div
-            class="mh-100"
-            style="height: 305px; background-color: rgba(0, 0, 255, 0.1)"
-          >
+          <div class="mh-100 overflow-auto" style="height: 305px">
+            <div v-if="isLoadingCurrent">
+              <p class="placeholder-wave">
+                <span class="placeholder col-12"></span>
+              </p>
+              <p class="placeholder-wave">
+                <span class="placeholder col-12"></span>
+              </p>
+              <p class="placeholder-wave">
+                <span class="placeholder col-12"></span>
+              </p>
+            </div>
             <!-- current in the parking lot list -->
-            Max-height 100%
+            <ul class="list-group" v-if="!isLoadingCurrent">
+              <currentCarList
+                v-for="car in currentCars"
+                :key="car.id"
+                :user-name="car.userName"
+                :email="car.email"
+                :car="car.car"
+                :parking-place="car.parkingPlace"
+                :time="car.time"
+              />
+            </ul>
           </div>
         </div>
       </div>
-
       <div class="row align-items-md-stretch">
         <div class="col-md-6">
           <div class="h-100 p-3 text-bg-dark rounded-3">
             <h2>Utilization</h2>
             <div class="row">
               <div class="col">
-                <div class="progressBar">
+                <div
+                  class="spinner-border text-light"
+                  role="status"
+                  v-if="isLoadingUtilization"
+                >
+                  <span class="visually-hidden">Loading...</span>
+                </div>
+                <div class="progressBar" v-if="!isLoadingUtilization">
                   <!-- progress bar -->
                   <div class="skill">
                     <div class="outer">
@@ -46,7 +70,7 @@
                 </div>
               </div>
               <!-- Add parking number x / full -->
-              <div class="col text-center">
+              <div class="col text-center" v-if="!isLoadingUtilization">
                 <div class="useProportion">
                   <strong style="font-size: 50px">{{ this.carNumber }}</strong>
                   <sub style="font-size: 30px">/ 800</sub>
@@ -69,10 +93,18 @@
 </template>
 
 <script>
+import currentCarList from "./currentCarList.vue";
+
 export default {
+  components: {
+    currentCarList,
+  },
   data() {
     return {
       carNumber: 0,
+      currentCars: [],
+      isLoadingCurrent: false,
+      isLoadingUtilization: false,
     };
   },
   methods: {
@@ -97,6 +129,7 @@ export default {
       }, 0.001);
     },
     getPlaceNumber: async function () {
+      this.isLoadingUtilization = true;
       await fetch("http://165.22.58.21:3000/parking/field")
         .then((response) => {
           if (response.ok) {
@@ -104,6 +137,7 @@ export default {
           }
         })
         .then((result) => {
+          this.isLoadingUtilization = false;
           for (let element of result.data) {
             this.carNumber += 200 - element.remain;
           }
@@ -114,12 +148,37 @@ export default {
           console.log("Error", error);
         });
     },
-    fetchData: function () {
-      this.getPlaceNumber();
+    getCurrentSlot: async function () {
+      this.isLoadingCurrent = true;
+      await fetch("http://165.22.58.21:3000/parking/slot/current")
+        .then((response) => {
+          if (response.ok) {
+            return response.json();
+          }
+        })
+        .then((result) => {
+          this.isLoadingCurrent = false;
+          let currentCars = [];
+          for (let element of result.data) {
+            currentCars.push({
+              userName: element.account,
+              email: element.email,
+              car: element.license_plate,
+              parkingPlace: element.parking_place,
+              id: element.user_id,
+              time: element.entry_time,
+            });
+          }
+          this.currentCars = currentCars;
+        })
+        .catch((error) => {
+          console.log("Error", error);
+        });
     },
   },
   mounted() {
-    this.fetchData();
+    this.getPlaceNumber();
+    this.getCurrentSlot();
   },
 };
 </script>

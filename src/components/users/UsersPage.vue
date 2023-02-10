@@ -28,7 +28,17 @@
       </nav>
     </div>
     <div class="row">
-      <h3 v-if="isLoading">Loading...</h3>
+      <div v-if="isLoading">
+        <p class="placeholder-wave">
+          <span class="placeholder col-12"></span>
+        </p>
+        <p class="placeholder-wave">
+          <span class="placeholder col-12"></span>
+        </p>
+        <p class="placeholder-wave">
+          <span class="placeholder col-12"></span>
+        </p>
+      </div>
       <!-- Put users here -->
       <div class="accordion" id="accordionFlushExample" v-if="!isLoading">
         <user
