@@ -20,13 +20,17 @@
     >
       <div class="accordion-body">
         <ul>
-          <li><strong>Nick Name:</strong> {{ nickName }}</li>
           <li><strong>Email:</strong> {{ email }}</li>
           <li><strong>Phone Number:</strong> {{ phoneNumber }}</li>
           <li><strong>User Type:</strong> {{ userType }}</li>
           <li>
             <strong>Own Cars:</strong>
-            <ul></ul>
+            <ul>
+              <!-- TODO: Debug -->
+              <li v-for="(car, idx) in cars" :key="idx">
+                {{ car.car }}
+              </li>
+            </ul>
           </li>
         </ul>
       </div>
@@ -40,10 +44,10 @@ import { stringifyExpression } from "@vue/compiler-core";
 export default {
   props: {
     name: String,
-    nickName: String,
     email: String,
     phoneNumber: String,
     userType: String,
+    cars: Object,
     index: Number,
   },
   data() {
@@ -60,5 +64,4 @@ export default {
 };
 </script>
 
-<style>
-</style>
+<style></style>

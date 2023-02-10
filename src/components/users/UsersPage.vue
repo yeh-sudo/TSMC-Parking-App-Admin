@@ -32,7 +32,6 @@
           :key="user.id"
           :name="user.name"
           :index="index"
-          :nick-name="user.nickName"
           :email="user.email"
           :phone-number="user.phoneNumber"
           :user-type="user.userType"
@@ -53,24 +52,7 @@ export default {
   data() {
     return {
       searchInput: "",
-      users: [
-        {
-          id: "ChengShianYeh",
-          name: "Cheng Shian Yeh",
-          nickName: "yeh-sudo",
-          email: "f74091289@gs.ncku.edu.tw",
-          phoneNumber: "0966227782",
-          userType: "Normal",
-        },
-        {
-          id: "LebronJames",
-          name: "Lebron James",
-          nickName: "Lebron",
-          email: "lebron@gmail.com",
-          phoneNumber: "0988 889 888",
-          userType: "Normal",
-        },
-      ],
+      users: [],
     };
   },
   methods: {
@@ -81,14 +63,36 @@ export default {
     },
     loadUserData: async function () {
       await fetch("http://165.22.58.21:3000/all-user")
-        .then(function (response) {
-          console.log(response);
+        .then((response) => {
           if (response.ok) {
             return response.json();
           }
         })
-        .then(function (data) {
-          console.log(data);
+        .then((result) => {
+          const users = [];
+          for (let element of result.data) {
+            let carArr = [];
+            for (let car of element.cars) {
+              carArr.push(car[0]);
+            }
+            let carJson = [];
+            for (let i = 0; i < carArr.length; i++) {
+              carJson.push({
+                id: i,
+                car: carArr[i],
+              });
+            }
+            console.log(carJson);
+            users.push({
+              id: element.userId,
+              name: element.account,
+              email: element.email,
+              phoneNumber: element.tele,
+              userType: element.group,
+              cars: carArr,
+            });
+          }
+          this.users = users;
         })
         .catch(function (error) {
           console.log("Error", error);
@@ -97,7 +101,7 @@ export default {
   },
   mounted() {
     this.loadUserData();
-  }
+  },
 };
 </script>
 

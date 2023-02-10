@@ -9,10 +9,18 @@
       </div>
 
       <!-- Login Form -->
-      <form @submit.prevent="loginHandler">
+      <form @submit.prevent="createNewUser">
+        <input
+          type="text"
+          id="userName"
+          class="fadeIn second"
+          name="login"
+          placeholder="User Name"
+          v-model.trim="userName"
+        />
         <input
           type="email"
-          id="login"
+          id="email"
           class="fadeIn second"
           name="login"
           placeholder="Email"
@@ -26,13 +34,16 @@
           placeholder="Password"
           v-model.trim="password"
         />
-        <input type="submit" class="fadeIn fourth" value="Log In" />
+        <input
+          type="text"
+          id="phoneNumber"
+          class="fadeIn third"
+          name="login"
+          placeholder="Phone Number"
+          v-model.trim="phoneNumber"
+        />
+        <input type="submit" class="fadeIn fourth" value="Create"/>
       </form>
-
-      <!-- Remind Passowrd -->
-      <div id="formFooter">
-        <router-link class="underlineHover" to="/create-account">Create An Account</router-link>
-      </div>
     </div>
   </div>
 </template>
@@ -43,19 +54,33 @@ export default {
     return {
       email: "",
       password: "",
+      userName: "",
+      phoneNumber: "",
     };
   },
   methods: {
-    loginHandler: async function () {
+    createNewUser: async function () {
       if (
         this.email === "" ||
         !this.email.includes("@") ||
-        this.password === ""
+        this.password === "" ||
+        this.userName === "" ||
+        this.phoneNumber === ""
       ) {
-        alert("Please enter valid email or password.");
+        alert("Please enter valid user name, email or password.");
         return;
       }
-      // search user
+      const gen = () => {
+        let result = "";
+        for (let i = 0; i < 8; i++) {
+          let tmp = Math.floor(Math.random() * 26);
+          result += String.fromCharCode(97 + tmp);
+        }
+        return result;
+      };
+      let userId = gen();
+      console.log(userId);
+      // check API
       await fetch("http://165.22.58.21:3000/check-user", {
         method: "POST",
         headers: {
@@ -70,23 +95,18 @@ export default {
           ],
         }),
       })
-        .then(function (response) {
+        .then((response) => {
           if (response.ok) {
             console.log(response);
             return response.json();
           }
         })
-        .then(function (result) {
-          console.log(result.data[0].check);
-          if (result.data[0].check.exist){
-            if (result.data[0].check.password){
-            // redirect to admin page
-            window.location.href = "/admin/home";
-            } else {
-              alert("Wrong password. Please try again.");
-            }
+        .then((result) => {
+          if (result.data[0].check.exist) {
+            alert("Account not exist.");
           } else {
-            alert("Account not exist. Please create an account.");
+            this.create(userId);
+            window.location.href = "/";
           }
         })
         .catch(function (error) {
@@ -94,6 +114,36 @@ export default {
         });
       this.email = "";
       this.password = "";
+      this.userName = "";
+      this.phoneNumber = "";
+    },
+    create: async function (userId) {
+      await fetch("http://165.22.58.21:3000/new-user", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          data: [
+            {
+              userID: userId,
+              email: this.email,
+              password: this.password,
+              account: this.userName,
+              phoneNumber: this.phoneNumber,
+              identity: "Admin",
+            },
+          ],
+        }),
+      })
+        .then((response) => {
+          if (response.ok) {
+            console.log(response);
+          }
+        })
+        .catch(function (error) {
+          console.log("Error", error);
+        });
     },
   },
 };
@@ -271,6 +321,36 @@ input[type="password"]:focus {
 }
 
 input[type="password"]:placeholder {
+  color: #cccccc;
+}
+
+input[type="text"] {
+  background-color: #f6f6f6;
+  border: none;
+  color: #0d0d0d;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 5px;
+  width: 85%;
+  border: 2px solid #f6f6f6;
+  -webkit-transition: all 0.5s ease-in-out;
+  -moz-transition: all 0.5s ease-in-out;
+  -ms-transition: all 0.5s ease-in-out;
+  -o-transition: all 0.5s ease-in-out;
+  transition: all 0.5s ease-in-out;
+  -webkit-border-radius: 5px 5px 5px 5px;
+  border-radius: 5px 5px 5px 5px;
+}
+
+input[type="text"]:focus {
+  background-color: #fff;
+  border-bottom: 2px solid #5fbae9;
+}
+
+input[type="text"]:placeholder {
   color: #cccccc;
 }
 

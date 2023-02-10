@@ -5,11 +5,13 @@ import BlacklistPage from "../components/blacklist/BlacklistPage.vue";
 import HistoryPage from "../components/history/HistoryPage.vue";
 import AuthPage from "../components/auth/AuthPage.vue";
 import AdminPage from "../components/adminview/adminview.vue"
+import CreateAccount from "../components/auth/CreateAccount.vue"
 
 const router = createRouter({
   history: createWebHistory(),
   routes: [
     { path: "/", component: AuthPage },
+    { path: "/create-account", component: CreateAccount },
     {
       path: "/admin",
       component: AdminPage,
