@@ -4,24 +4,26 @@
       <nav class="navbar bg-body-tertiary">
         <div class="container-fluid">
           <a class="navbar-brand" style="font-size: 30px">Users Data</a>
-          <form class="d-flex" role="search">
-            <input
-              class="form-control me-2"
-              type="search"
-              placeholder="Search"
-              aria-label="Search"
-              v-model="searchInput"
-            />
-            <!-- TODO: add search user API -->
-            <button
-              id="SearchButton"
-              class="btn btn-danger"
-              type="submit"
-              @click.prevent="searchButtonClick"
-            >
-              Search
-            </button>
-          </form>
+          <div class="d-flex">
+            <div class="d-flex justify-content-center h-100">
+              <div class="searchbar">
+                <input
+                  class="search_input"
+                  type="text"
+                  name=""
+                  placeholder="Search..."
+                  v-model="searchInput"
+                />
+                <a
+                  href="#"
+                  class="search_icon"
+                  @click.prevent="searchButtonClick"
+                >
+                  <span class="material-icons"> search </span>
+                </a>
+              </div>
+            </div>
+          </div>
         </div>
       </nav>
     </div>
@@ -145,4 +147,48 @@ export default {
 };
 </script>
 
-<style></style>
+<style scoped>
+.searchbar {
+  margin-bottom: auto;
+  margin-top: auto;
+  height: 60px;
+  background-color: #353b48;
+  border-radius: 30px;
+  padding: 10px;
+}
+
+.search_input {
+  color: white;
+  border: 0;
+  outline: 0;
+  background: none;
+  width: 0;
+  caret-color: transparent;
+  line-height: 40px;
+  transition: width 0.4s linear;
+}
+
+.searchbar:hover > .search_input {
+  padding: 0 10px;
+  width: 450px;
+  caret-color: red;
+  transition: width 0.4s linear;
+}
+
+.searchbar:hover > .search_icon {
+  background: white;
+  color: red;
+}
+
+.search_icon {
+  height: 40px;
+  width: 40px;
+  float: right;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 50%;
+  color: white;
+  text-decoration: none;
+}
+</style>

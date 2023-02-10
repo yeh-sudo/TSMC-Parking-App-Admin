@@ -6,7 +6,7 @@
         <div class="container py-1">
           <div
             class="mh-100"
-            style="height: 225px; background-color: rgba(0, 0, 255, 0.1)"
+            style="height: 305px; background-color: rgba(0, 0, 255, 0.1)"
           >
             <!-- current in the parking lot list -->
             Max-height 100%
@@ -128,8 +128,12 @@ export default {
 :root {
   --change: 800;
 }
+main {
+  height: 750px;
+}
 .progressBar {
-  padding: 10px 60px;
+  padding: 10px 70px;
+  height: 190px;
 }
 .useProportion {
   margin: 40px 30px 40px -10px;
@@ -172,9 +176,8 @@ circle {
   animation: anim 2s linear forwards;
 }
 svg {
-  position: absolute;
-  top: 455.5px;
-  left: 232.5px;
+  position: relative;
+  bottom: 160px;
 }
 @keyframes anim {
   0% {
