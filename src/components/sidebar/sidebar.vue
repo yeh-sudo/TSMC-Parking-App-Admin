@@ -11,19 +11,19 @@
 
     <h3>Menu</h3>
     <div class="menu">
-      <router-link class="button" to="/">
+      <router-link class="button" to="/admin/home">
         <span class="material-icons">home</span>
         <span class="text">Home</span>
       </router-link>
-      <router-link class="button" to="/users">
+      <router-link class="button" to="/admin/users">
         <span class="material-icons">group</span>
         <span class="text">Users</span>
       </router-link>
-      <router-link class="button" to="/history">
+      <router-link class="button" to="/admin/history">
         <span class="material-icons">history</span>
         <span class="text">History</span>
       </router-link>
-      <router-link class="button" to="/blacklist">
+      <router-link class="button" to="/admin/blacklist">
         <span class="material-icons">person_off</span>
         <span class="text">Blacklist</span>
       </router-link>

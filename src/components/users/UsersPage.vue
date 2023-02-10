@@ -12,7 +12,14 @@
               aria-label="Search"
               v-model="searchInput"
             />
-            <button id="SearchButton" class="btn btn-danger" type="submit" @click.prevent="searchButtonClick">Search</button>
+            <button
+              id="SearchButton"
+              class="btn btn-danger"
+              type="submit"
+              @click.prevent="searchButtonClick"
+            >
+              Search
+            </button>
           </form>
         </div>
       </nav>
@@ -67,14 +74,31 @@ export default {
     };
   },
   methods: {
-    searchButtonClick: function() {
+    searchButtonClick: function () {
       // fetch user api to search user
       console.log("hello, " + this.searchInput);
       this.searchInput = "";
-    }
+    },
+    loadUserData: async function () {
+      await fetch("http://165.22.58.21:3000/all-user")
+        .then(function (response) {
+          console.log(response);
+          if (response.ok) {
+            return response.json();
+          }
+        })
+        .then(function (data) {
+          console.log(data);
+        })
+        .catch(function (error) {
+          console.log("Error", error);
+        });
+    },
+  },
+  mounted() {
+    this.loadUserData();
   }
 };
 </script>
 
-<style>
-</style>
+<style></style>
