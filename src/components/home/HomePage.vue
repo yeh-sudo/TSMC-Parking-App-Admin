@@ -8,7 +8,8 @@
             class="mh-100"
             style="height: 225px; background-color: rgba(0, 0, 255, 0.1)"
           >
-            <!-- current in the parking lot list -->s Max-height 100%
+            <!-- current in the parking lot list -->
+            Max-height 100%
           </div>
         </div>
       </div>
@@ -16,33 +17,42 @@
       <div class="row align-items-md-stretch">
         <div class="col-md-6">
           <div class="h-100 p-3 text-bg-dark rounded-3">
-            <h2>Parking Space Available</h2>
-            <div class="progressBar">
-              <!-- progress bar -->
-              <div class="skill">
-                <div class="outer">
-                  <div class="inner">
-                    <div id="number"></div>
+            <h2>Utilization</h2>
+            <div class="row">
+              <div class="col">
+                <div class="progressBar">
+                  <!-- progress bar -->
+                  <div class="skill">
+                    <div class="outer">
+                      <div class="inner">
+                        <div id="number"></div>
+                      </div>
+                    </div>
                   </div>
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    version="1.1"
+                    width="160px"
+                    height="160px"
+                  >
+                    <defs>
+                      <linearGradient id="GradientColor">
+                        <stop offset="0%" stop-color="#de0a26" />
+                        <stop offset="100%" stop-color="#ffffff" />
+                      </linearGradient>
+                    </defs>
+                    <circle cx="80" cy="80" r="70" stroke-linecap="round" />
+                  </svg>
                 </div>
               </div>
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                version="1.1"
-                width="160px"
-                height="160px"
-              >
-                <defs>
-                  <linearGradient id="GradientColor">
-                    <stop offset="0%" stop-color="#de0a26" />
-                    <stop offset="100%" stop-color="#ffffff" />
-                  </linearGradient>
-                </defs>
-                <circle cx="80" cy="80" r="70" stroke-linecap="round" />
-              </svg>
+              <!-- Add parking number x / full -->
+              <div class="col text-center">
+                <div class="useProportion">
+                  <strong style="font-size: 50px">{{ this.carNumber }}</strong>
+                  <sub style="font-size: 30px">/ 800</sub>
+                </div>
+              </div>
             </div>
-            <!-- Add parking number x / full -->
-            <div></div>
           </div>
         </div>
         <div class="col-md-6">
@@ -69,7 +79,7 @@ export default {
     progressBarHandler: function () {
       document.documentElement.style.setProperty(
         "--change",
-        -1.18 * this.carNumber + 472
+        -0.59 * this.carNumber + 472
       );
       let number = document.getElementById("number");
       if (this.carNumber === 0) {
@@ -81,23 +91,47 @@ export default {
           clearInterval();
         } else {
           counter += 1;
-          number.innerHTML = (counter / 4).toFixed(1) + "%";
+          number.innerHTML = (counter / 8).toFixed(1) + "%";
         }
-      }, 20);
+      }, 0.001);
+    },
+    getPlaceNumber: async function () {
+      await fetch("http://165.22.58.21:3000/place-number")
+        .then((response) => {
+          if (response.ok) {
+            return response.json();
+          }
+        })
+        .then((result) => {
+          for (let element of result.data) {
+            this.carNumber += 200 - element.remain;
+          }
+          this.carNumber += 200 * (4 - result.data.length);
+          this.progressBarHandler();
+        })
+        .catch((error) => {
+          console.log("Error", error);
+        });
+    },
+    fetchData: function () {
+      this.getPlaceNumber();
     },
   },
   mounted() {
-    this.progressBarHandler();
+    this.fetchData();
   },
 };
 </script>
 
 <style scoped>
 :root {
-  --change: 300;
+  --change: 800;
 }
 .progressBar {
   padding: 10px 60px;
+}
+.useProportion {
+  margin: 40px 30px 40px -10px;
 }
 .skill {
   width: 160px;
@@ -138,8 +172,8 @@ circle {
 }
 svg {
   position: absolute;
-  top: 471px;
-  left: 166px;
+  top: 455.5px;
+  left: 232.5px;
 }
 @keyframes anim {
   0% {
