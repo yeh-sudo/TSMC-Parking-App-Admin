@@ -31,7 +31,9 @@
 
       <!-- Remind Passowrd -->
       <div id="formFooter">
-        <router-link class="underlineHover" to="/create-account">Create An Account</router-link>
+        <router-link class="underlineHover" to="/create-account"
+          >Create An Account</router-link
+        >
       </div>
     </div>
   </div>
@@ -78,10 +80,10 @@ export default {
         })
         .then(function (result) {
           console.log(result.data[0].check);
-          if (result.data[0].check.exist){
-            if (result.data[0].check.password){
-            // redirect to admin page
-            window.location.href = "/admin/home";
+          if (result.data[0].check.exist) {
+            if (result.data[0].check.password) {
+              // redirect to admin page
+              window.location.href = "/admin/home";
             } else {
               alert("Wrong password. Please try again.");
             }

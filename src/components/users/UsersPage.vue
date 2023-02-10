@@ -26,8 +26,9 @@
       </nav>
     </div>
     <div class="row">
+      <h3 v-if="isLoading">Loading...</h3>
       <!-- Put users here -->
-      <div class="accordion" id="accordionFlushExample">
+      <div class="accordion" id="accordionFlushExample" v-if="!isLoading">
         <user
           v-for="(user, index) in users"
           :key="user.id"
@@ -36,6 +37,7 @@
           :email="user.email"
           :phone-number="user.phoneNumber"
           :user-type="user.userType"
+          :cars="user.cars"
         />
       </div>
     </div>
@@ -54,46 +56,80 @@ export default {
     return {
       searchInput: "",
       users: [],
+      isLoading: false,
     };
   },
   methods: {
-    searchButtonClick: function () {
-      // fetch user api to search user
-      console.log("hello, " + this.searchInput);
-      this.searchInput = "";
-    },
-    loadUserData: async function () {
-      await fetch("http://165.22.58.21:3000/all-user")
+    searchButtonClick: async function () {
+      if (this.searchInput === "") {
+        this.loadUserData();
+        return;
+      }
+      this.isLoading = true;
+      await fetch("http://165.22.58.21:3000/user/search/" + this.searchInput)
         .then((response) => {
           if (response.ok) {
             return response.json();
           }
         })
         .then((result) => {
+          this.isLoading = false;
           const users = [];
           for (let element of result.data) {
             if (element.group === "Admin") {
               continue;
             }
-            let carArr = [];
-            for (let car of element.cars) {
-              carArr.push(car[0]);
+            let carStr = "";
+            for (let i = 0; i < element.cars.length; i++) {
+              carStr += element.cars[i][0];
+              if (i != element.cars.length - 1) {
+                carStr += ", ";
+              }
             }
-            let carJson = [];
-            for (let i = 0; i < carArr.length; i++) {
-              carJson.push({
-                id: i,
-                car: carArr[i],
-              });
-            }
-            console.log(carJson);
             users.push({
               id: element.userId,
               name: element.account,
               email: element.email,
               phoneNumber: element.tele,
               userType: element.group,
-              cars: carArr,
+              cars: carStr,
+            });
+          }
+          this.users = users;
+        })
+        .catch(function (error) {
+          console.log("Error", error);
+        });
+    },
+    loadUserData: async function () {
+      this.isLoading = true;
+      await fetch("http://165.22.58.21:3000/user/all")
+        .then((response) => {
+          if (response.ok) {
+            return response.json();
+          }
+        })
+        .then((result) => {
+          this.isLoading = false;
+          const users = [];
+          for (let element of result.data) {
+            if (element.group === "Admin") {
+              continue;
+            }
+            let carStr = "";
+            for (let i = 0; i < element.cars.length; i++) {
+              carStr += element.cars[i][0];
+              if (i != element.cars.length - 1) {
+                carStr += ", ";
+              }
+            }
+            users.push({
+              id: element.userId,
+              name: element.account,
+              email: element.email,
+              phoneNumber: element.tele,
+              userType: element.group,
+              cars: carStr,
             });
           }
           this.users = users;

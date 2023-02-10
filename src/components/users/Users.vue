@@ -23,15 +23,7 @@
           <li><strong>Email:</strong> {{ email }}</li>
           <li><strong>Phone Number:</strong> {{ phoneNumber }}</li>
           <li><strong>User Type:</strong> {{ userType }}</li>
-          <li>
-            <strong>Own Cars:</strong>
-            <ul>
-              <!-- TODO: Debug -->
-              <li v-for="(car, idx) in cars" :key="idx">
-                {{ car.car }}
-              </li>
-            </ul>
-          </li>
+          <li><strong>Own Cars:</strong> {{ cars }}</li>
         </ul>
       </div>
     </div>
@@ -39,15 +31,13 @@
 </template>
 
 <script>
-import { stringifyExpression } from "@vue/compiler-core";
-
 export default {
   props: {
     name: String,
     email: String,
     phoneNumber: String,
     userType: String,
-    cars: Object,
+    cars: String,
     index: Number,
   },
   data() {

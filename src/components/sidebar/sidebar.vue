@@ -27,6 +27,7 @@
         <span class="material-icons">person_off</span>
         <span class="text">Blacklist</span>
       </router-link>
+      <!-- TODO: add logout button -->
     </div>
   </aside>
 </template>
