@@ -72,6 +72,9 @@ export default {
         .then((result) => {
           const users = [];
           for (let element of result.data) {
+            if (element.group === "Admin") {
+              continue;
+            }
             let carArr = [];
             for (let car of element.cars) {
               carArr.push(car[0]);
