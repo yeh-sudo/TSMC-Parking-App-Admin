@@ -12,6 +12,7 @@
               aria-label="Search"
               v-model="searchInput"
             />
+            <!-- TODO: add search user API -->
             <button
               id="SearchButton"
               class="btn btn-danger"
