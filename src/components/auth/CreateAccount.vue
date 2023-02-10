@@ -42,7 +42,7 @@
           placeholder="Phone Number"
           v-model.trim="phoneNumber"
         />
-        <input type="submit" class="fadeIn fourth" value="Create"/>
+        <input type="submit" class="fadeIn fourth" value="Create" />
       </form>
     </div>
   </div>
@@ -81,20 +81,12 @@ export default {
       let userId = gen();
       console.log(userId);
       // check API
-      await fetch("http://165.22.58.21:3000/check-user", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          data: [
-            {
-              email: this.email,
-              password: this.password,
-            },
-          ],
-        }),
-      })
+      await fetch(
+        "http://165.22.58.21:3000/user/check/" +
+          this.email +
+          "/" +
+          this.password
+      )
         .then((response) => {
           if (response.ok) {
             console.log(response);
@@ -103,7 +95,7 @@ export default {
         })
         .then((result) => {
           if (result.data[0].check.exist) {
-            alert("Account not exist.");
+            alert("Account already exist.");
           } else {
             this.create(userId);
             window.location.href = "/";
@@ -118,7 +110,7 @@ export default {
       this.phoneNumber = "";
     },
     create: async function (userId) {
-      await fetch("http://165.22.58.21:3000/new-user", {
+      await fetch("http://165.22.58.21:3000/user/new", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

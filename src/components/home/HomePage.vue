@@ -82,8 +82,9 @@ export default {
         -0.59 * this.carNumber + 472
       );
       let number = document.getElementById("number");
-      if (this.carNumber === 0) {
+      if (this.carNumber <= 0) {
         number.innerHTML = 0.0 + "%";
+        return;
       }
       let counter = 0;
       setInterval(() => {
@@ -96,7 +97,7 @@ export default {
       }, 0.001);
     },
     getPlaceNumber: async function () {
-      await fetch("http://165.22.58.21:3000/place-number")
+      await fetch("http://165.22.58.21:3000/parking/field")
         .then((response) => {
           if (response.ok) {
             return response.json();

@@ -58,20 +58,12 @@ export default {
         return;
       }
       // search user
-      await fetch("http://165.22.58.21:3000/check-user", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          data: [
-            {
-              email: this.email,
-              password: this.password,
-            },
-          ],
-        }),
-      })
+      await fetch(
+        "http://165.22.58.21:3000/user/check/" +
+          this.email +
+          "/" +
+          this.password
+      )
         .then(function (response) {
           if (response.ok) {
             console.log(response);
