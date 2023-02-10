@@ -5,7 +5,7 @@
 
       <!-- Icon -->
       <div class="fadeIn first">
-        <img src="" id="icon" alt="" />
+        <h2 style="color: black;">CREATE AN ACCOUNT</h2>
       </div>
 
       <!-- Login Form -->
@@ -211,7 +211,7 @@ h2.inactive {
 
 h2.active {
   color: #0d0d0d;
-  border-bottom: 2px solid #5fbae9;
+  border-bottom: 2px solid red;
 }
 
 /* FORM TYPOGRAPHY*/
@@ -219,7 +219,7 @@ h2.active {
 input[type="button"],
 input[type="submit"],
 input[type="reset"] {
-  background-color: #56baed;
+  background-color: black;
   border: none;
   color: white;
   padding: 15px 80px;
@@ -229,7 +229,7 @@ input[type="reset"] {
   text-transform: uppercase;
   font-size: 13px;
   -webkit-box-shadow: 0 10px 30px 0 rgba(95, 186, 233, 0.4);
-  box-shadow: 0 10px 30px 0 rgba(95, 186, 233, 0.4);
+  box-shadow: 0 10px 30px 0 rgba(233, 95, 95, 0.4);
   -webkit-border-radius: 5px 5px 5px 5px;
   border-radius: 5px 5px 5px 5px;
   margin: 5px 20px 40px 20px;
@@ -243,7 +243,7 @@ input[type="reset"] {
 input[type="button"]:hover,
 input[type="submit"]:hover,
 input[type="reset"]:hover {
-  background-color: #39ace7;
+  background-color: red;
 }
 
 input[type="button"]:active,
@@ -279,7 +279,7 @@ input[type="email"] {
 
 input[type="email"]:focus {
   background-color: #fff;
-  border-bottom: 2px solid #5fbae9;
+  border-bottom: 2px solid red;
 }
 
 input[type="email"]:placeholder {
@@ -309,7 +309,7 @@ input[type="password"] {
 
 input[type="password"]:focus {
   background-color: #fff;
-  border-bottom: 2px solid #5fbae9;
+  border-bottom: 2px solid red;
 }
 
 input[type="password"]:placeholder {
@@ -339,7 +339,7 @@ input[type="text"] {
 
 input[type="text"]:focus {
   background-color: #fff;
-  border-bottom: 2px solid #5fbae9;
+  border-bottom: 2px solid red;
 }
 
 input[type="text"]:placeholder {
@@ -447,26 +447,6 @@ input[type="text"]:placeholder {
   -webkit-animation-delay: 1s;
   -moz-animation-delay: 1s;
   animation-delay: 1s;
-}
-
-/* Simple CSS3 Fade-in Animation */
-.underlineHover:after {
-  display: block;
-  left: 0;
-  bottom: -10px;
-  width: 0;
-  height: 2px;
-  background-color: #56baed;
-  content: "";
-  transition: width 0.2s;
-}
-
-.underlineHover:hover {
-  color: #0d0d0d;
-}
-
-.underlineHover:hover:after {
-  width: 100%;
 }
 
 /* OTHERS */

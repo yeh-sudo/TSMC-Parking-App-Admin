@@ -12,8 +12,9 @@
                   type="text"
                   name=""
                   placeholder="Search..."
+                  v-model="searchInput"
                 />
-                <a href="#" class="search_icon">
+                <a href="#" class="search_icon" @click.prevent="searchParking">
                   <span class="material-icons"> search </span>
                 </a>
               </div>
@@ -23,14 +24,85 @@
       </nav>
     </div>
     <div class="row">
-      <h3 v-if="isLoading">Loading...</h3>
+      <div v-if="isLoadingCurrent">
+        <p class="placeholder-wave">
+          <span class="placeholder col-12"></span>
+        </p>
+        <p class="placeholder-wave">
+          <span class="placeholder col-12"></span>
+        </p>
+        <p class="placeholder-wave">
+          <span class="placeholder col-12"></span>
+        </p>
+      </div>
       <!-- Put history list here -->
+      <div class="overflow-auto" v-if="!isLoadingCurrent">
+        <ul class="list-group">
+          <historyList
+            v-for="item in parkingList"
+            :key="item.id"
+            :name="item.name"
+            :email="item.email"
+            :entry="item.entry"
+            :leave="item.leave"
+            :plate="item.plate"
+          />
+        </ul>
+      </div>
     </div>
   </div>
 </template>
 
 <script>
-export default {};
+import historyList from "./historyList.vue";
+
+export default {
+  components: {
+    historyList,
+  },
+  data() {
+    return {
+      searchInput: "",
+      isLoading: false,
+      parkingList: [],
+    };
+  },
+  methods: {
+    searchParking: async function () {
+      this.isLoading = true;
+      if (this.searchInput === "") {
+        this.isLoading = false;
+        return;
+      }
+      const searchStr = this.searchInput.replace("-", "/").trim();
+      this.searchInput = "";
+      await fetch("http://127.0.0.1:3000/parking/history/" + searchStr)
+        .then((response) => {
+          console.log(response);
+          if (response.ok) {
+            return response.json();
+          }
+        })
+        .then((result) => {
+          let parkingList = [];
+          for (let element of result.data) {
+            parkingList.push({
+              name: element.account,
+              email: element.email,
+              entry: element.entry_time,
+              leave: element.leave_time,
+              plate: element.license_plate,
+              id: element.user_id,
+            });
+          }
+          this.parkingList = parkingList;
+        })
+        .catch((error) => {
+          console.log("Error", error);
+        });
+    },
+  },
+};
 </script>
 
 <style scoped>
