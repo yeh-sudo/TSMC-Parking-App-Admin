@@ -24,7 +24,7 @@
       </nav>
     </div>
     <div class="row">
-      <div v-if="isLoadingCurrent">
+      <div v-if="isLoading">
         <p class="placeholder-wave">
           <span class="placeholder col-12"></span>
         </p>
@@ -36,7 +36,7 @@
         </p>
       </div>
       <!-- Put history list here -->
-      <div class="overflow-auto" v-if="!isLoadingCurrent">
+      <div class="overflow-auto" v-if="!isLoading">
         <ul class="list-group">
           <historyList
             v-for="item in parkingList"
@@ -76,7 +76,7 @@ export default {
       }
       const searchStr = this.searchInput.replace("-", "/").trim();
       this.searchInput = "";
-      await fetch("http://127.0.0.1:3000/parking/history/" + searchStr)
+      await fetch("http://165.22.58.21:3000/parking/history/" + searchStr)
         .then((response) => {
           console.log(response);
           if (response.ok) {
@@ -84,6 +84,7 @@ export default {
           }
         })
         .then((result) => {
+          this.isLoading = false;
           let parkingList = [];
           for (let element of result.data) {
             parkingList.push({

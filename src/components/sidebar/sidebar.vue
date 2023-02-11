@@ -27,7 +27,13 @@
         <span class="material-icons">person_off</span>
         <span class="text">Blacklist</span>
       </router-link>
-      <!-- TODO: add logout button -->
+    </div>
+    <div class="flex"></div>
+    <div class="menu">
+      <a class="button" @click.prevent="logout">
+        <span class="material-icons not-selectable">logout</span>
+        <span class="text not-selectable">Logout</span>
+      </a>
     </div>
   </aside>
 </template>
@@ -42,6 +48,10 @@ const ToggleMenu = () => {
 
   localStorage.setItem("is_expanded", is_expanded.value);
 };
+
+function logout() {
+  window.location.href = "/";
+}
 </script>
 
 <style lang="scss" scoped>
@@ -57,6 +67,10 @@ aside {
   color: var(--light);
 
   transition: 0.2s ease-out;
+
+  .flex {
+    flex: 1 1 0;
+  }
 
   .logo {
     margin-bottom: 1rem;
@@ -171,5 +185,16 @@ aside {
     // z-index: 99;
     display: none;
   }
+}
+a:hover {
+  cursor: pointer;
+}
+.not-selectable {
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
 }
 </style>

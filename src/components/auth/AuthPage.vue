@@ -1,5 +1,5 @@
 <template>
-  <div class="wrapper fadeInDown">
+  <div class="wrapper fadeInDown" :key="componentKey">
     <div id="formContent">
       <!-- Tabs Titles -->
 
@@ -45,6 +45,7 @@ export default {
     return {
       email: "",
       password: "",
+      componentKey: 0,
     };
   },
   methods: {
@@ -89,6 +90,12 @@ export default {
       this.email = "";
       this.password = "";
     },
+    forceRerender: function () {
+      this.componentKey++;
+    },
+  },
+  mounted() {
+    this.componentKey++;
   },
 };
 </script>
