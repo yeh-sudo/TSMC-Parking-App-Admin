@@ -189,9 +189,9 @@ export default {
 
 .searchbar:hover > .search_input {
   padding: 0 10px;
-  width: 450px;
+  width: 200px;
   caret-color: red;
-  transition: width 0.4s linear;
+  transition: width 0.2s linear;
 }
 
 .searchbar:hover > .search_icon {

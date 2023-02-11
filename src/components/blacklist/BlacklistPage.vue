@@ -65,13 +65,11 @@ export default {
       await fetch("http://165.22.58.21:3000/black")
         .then((response) => {
           if (response.ok) {
-            console.log(response);
             return response.json();
           }
         })
         .then((result) => {
           this.isLoading = false;
-          console.log(result.data);
           let blacklist = [];
           for (let element of result.data) {
             blacklist.push({

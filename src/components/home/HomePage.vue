@@ -81,9 +81,12 @@
         </div>
         <div class="col-md-6">
           <div class="h-100 p-3 bg-light border rounded-3">
-            <h2>Notification</h2>
+            <h2>Notifications</h2>
             <div>
               <!-- notification list -->
+              <div v-if="!hasNotification">
+                <h3>No notifications.</h3>
+              </div>
             </div>
           </div>
         </div>
@@ -105,6 +108,7 @@ export default {
       currentCars: [],
       isLoadingCurrent: false,
       isLoadingUtilization: false,
+      hasNotification: false,
     };
   },
   methods: {
