@@ -1,5 +1,9 @@
 # TSMC-Parking-App-Admin
 
+## Deploy
+
+url: https://vue-app-3c6e8.web.app
+
 ## Local Development
 
 1. Install vite
@@ -17,7 +21,7 @@
 
 ## Backend
 
-URL: 
+URL:
 
 ## Usage
 
