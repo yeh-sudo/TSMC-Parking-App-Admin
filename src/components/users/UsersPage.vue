@@ -38,6 +38,15 @@
         <p class="placeholder-wave">
           <span class="placeholder col-12"></span>
         </p>
+        <p class="placeholder-wave">
+          <span class="placeholder col-12"></span>
+        </p>
+        <p class="placeholder-wave">
+          <span class="placeholder col-12"></span>
+        </p>
+        <p class="placeholder-wave">
+          <span class="placeholder col-12"></span>
+        </p>
       </div>
       <!-- Put users here -->
       <div class="accordion" id="accordionFlushExample" v-if="!isLoading">

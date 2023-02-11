@@ -34,6 +34,15 @@
         <p class="placeholder-wave">
           <span class="placeholder col-12"></span>
         </p>
+        <p class="placeholder-wave">
+          <span class="placeholder col-12"></span>
+        </p>
+        <p class="placeholder-wave">
+          <span class="placeholder col-12"></span>
+        </p>
+        <p class="placeholder-wave">
+          <span class="placeholder col-12"></span>
+        </p>
       </div>
       <!-- Put history list here -->
       <div class="overflow-auto" v-if="!isLoading">
