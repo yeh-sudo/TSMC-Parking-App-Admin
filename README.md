@@ -1,6 +1,6 @@
 # TSMC-Parking-App-Admin
 
-## Deploy
+## Deploy On
 
 Url: https://vue-app-3c6e8.web.app (Not work, since our backend apis are working on http)
 
@@ -21,9 +21,9 @@ Url: https://vue-app-3c6e8.web.app (Not work, since our backend apis are working
 
 ## Backend
 
-Url:
+Url: https://github.com/UncleThree0402/tsmc2023_hackathon_database_backend
 
-## Usage
+## Feature
 
 1. Admin home page
 ![image](https://user-images.githubusercontent.com/75301735/218459639-105ae591-309e-490e-b526-fba671bcfdb7.png)
